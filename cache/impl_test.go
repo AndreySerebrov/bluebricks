@@ -55,6 +55,8 @@ func Test_TTL_Check(t *testing.T) {
 	fetcher.EXPECT().Fetch(0).Return("test", nil).Times(2)
 	cache := New(fetcher, time.Millisecond*100, 1000)
 
+	time.Sleep(time.Millisecond * 50) // Ensure cache is warmed up
+
 	for range 10 {
 		val, err := cache.Fetch(0)
 		require.NoError(t, err)
